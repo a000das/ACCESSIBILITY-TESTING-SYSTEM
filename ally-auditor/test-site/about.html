@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- BUG 1: no <title> element (axe: document-title) -->
+  <style>
+    body { font-family: sans-serif; margin: 2rem; background: #ffffff; color: #111111; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="index.html">Home</a> | <a href="about.html">About</a>
+    </nav>
+
+    <h1>About Acme</h1>
+    <p>We build small tools for teams that care about quality.</p>
+
+    <!-- BUG 2: link containing only an icon, no accessible name (axe: link-name) -->
+    <a href="https://example.com/social">
+      <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1da1f2"/></svg>
+    </a>
+
+    <!-- BUG 3: select with no label (axe: select-name) -->
+    <select name="topic">
+      <option>Choose a topic</option>
+      <option>Sales</option>
+      <option>Support</option>
+    </select>
+
+    <!-- BUG 4: image with no alt attribute (axe: image-alt) -->
+    <img width="300" height="120"
+         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Crect width='300' height='120' fill='%23663399'/%3E%3Ctext x='16' y='70' fill='white' font-size='22'%3EOur office%3C/text%3E%3C/svg%3E">
+
+    <!-- BUG 5 (AI-ONLY): vague link text. axe has no rule for this. -->
+    <p>Want to know more? <a href="index.html">Click here</a></p>
+  </main>
+</body>
+</html>

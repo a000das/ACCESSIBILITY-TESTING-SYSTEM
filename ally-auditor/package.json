@@ -1,0 +1,20 @@
+{
+  "name": "ally-auditor",
+  "version": "1.0.0",
+  "description": "AI-assisted accessibility auditing system using Playwright and axe-core",
+  "main": "src/scan.ts",
+  "scripts": {
+    "scan": "tsx src/scan.ts"
+  },
+  "dependencies": {
+    "axe-core": "^4.10.2",
+    "axe-playwright": "^2.0.2",
+    "pg": "^8.23.1",
+    "playwright": "^1.49.1",
+    "tsx": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/pg": "^8.23.1"
+  }
+}
