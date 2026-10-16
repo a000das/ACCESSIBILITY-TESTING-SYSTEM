@@ -22,7 +22,7 @@ export async function crawlSite(startUrl: string) {
     try {
       await page.goto(currentUrl, { waitUntil: 'domcontentloaded' });
       
-      // Inject and run axe-core
+      // Inject and evaluate axe-core
       await injectAxe(page);
       const results = await page.evaluate(async () => {
         // @ts-ignore
@@ -32,7 +32,7 @@ export async function crawlSite(startUrl: string) {
       allResults.push({ url: currentUrl, violations: results.violations });
       console.log(`   Found ${results.violations.length} violations.`);
 
-      // Extract internal links for the crawler
+      // Discover internal page links
       const links = await page.$$eval('a[href]', (elements) =>
         elements.map((el) => (el as HTMLAnchorElement).href)
       );
@@ -48,7 +48,7 @@ export async function crawlSite(startUrl: string) {
             queue.push(linkUrl.href);
           }
         } catch (e) {
-          // Invalid URL, skip
+          // Ignore invalid URLs
         }
       }
     } catch (error) {
