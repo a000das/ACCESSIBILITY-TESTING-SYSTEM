@@ -48,6 +48,12 @@ async function main() {
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const pageResults: PageResult[] = [];
+  // Right after creating your page or context:
+  await context.addInitScript(() => {
+  if (!(window as any).__name) {
+    (window as any).__name = (fn: any) => fn;
+  }
+  });
 
   const crawled = await crawl({
     context,
