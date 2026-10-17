@@ -37,10 +37,8 @@ jobs:
 
       # 5. Start local web server & wait for readiness
       - name: Start Local Web Server
-        run: |
-          npx http-server ../test-site -p 3000 &
-          npx wait-on http-get://localhost:3000 --timeout 30000
-
+        run: npx http-server ../docs -p 3000 &
+         
       # 6. Run Accessibility Scan
       - name: Run Accessibility Scan
         run: npm run scan
