@@ -38,8 +38,8 @@ jobs:
       # 5. Start test server in background and wait for it to be ready
       - name: Start Local Web Server
         run: |
-          npx http-server ./test-site -p 3000 &
-          npx wait-on http://localhost:3000
+          npx http-server ../test-site -p 3000 &
+          npx wait-on http-get://localhost:3000 --timeout 30000
     
       # 6. Run Accessibility Scanner
       - name: Run Accessibility Scan
