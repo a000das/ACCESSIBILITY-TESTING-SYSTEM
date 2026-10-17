@@ -15,11 +15,11 @@ jobs:
         working-directory: ./ally-auditor
 
     steps:
-      # 1. Checkout repository code
+      # 1. Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js environment
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,29 +27,29 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './ally-auditor/package-lock.json'
 
-      # 3. Install project dependencies inside ally-auditor
+      # 3. Install NPM dependencies
       - name: Install Dependencies
         run: npm install
-        
-      # 4. Install a reliable static server globally
-      - name: Install Static Server
-        run: npm install -g http-server
 
-      # 5. Start test server in background and wait for it to be ready
+      # 4. Install Playwright browser dependencies
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # 5. Start local web server & wait for readiness
       - name: Start Local Web Server
         run: |
           npx http-server ../test-site -p 3000 &
           npx wait-on http-get://localhost:3000 --timeout 30000
-    
-      # 6. Run Accessibility Scanner
+
+      # 6. Run Accessibility Scan
       - name: Run Accessibility Scan
         run: npm run scan
 
-      # 7. Execute Report Checker
+      # 7. Check Accessibility Report Quality Gate
       - name: Check Accessibility Report
         run: npm run check-report
 
-      # 8. Upload JSON Report Artifact
+      # 8. Upload Report Artifact
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
