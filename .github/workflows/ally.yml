@@ -30,17 +30,17 @@ jobs:
       # 3. Install project dependencies inside ally-auditor
       - name: Install Dependencies
         run: npm install
+        
+      # 4. Install a reliable static server globally
+      - name: Install Static Server
+        run: npm install -g http-server
 
-      # 4. Install serve & wait-on
-      - name: Install Server Tools
-        run: npm install -g serve wait-on
-
-      # 5. Start the local test server
+      # 5. Start test server in background and wait for it to be ready
       - name: Start Local Web Server
         run: |
-          serve test-site -p 3000 &
+          npx http-server ./test-site -p 3000 &
           npx wait-on http://localhost:3000
-
+    
       # 6. Run Accessibility Scanner
       - name: Run Accessibility Scan
         run: npm run scan
