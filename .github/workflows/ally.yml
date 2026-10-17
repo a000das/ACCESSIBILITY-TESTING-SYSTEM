@@ -10,8 +10,12 @@ jobs:
   audit:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./ally-auditor
+
     steps:
-      # 1. Checkout your repository code
+      # 1. Checkout repository code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -21,33 +25,34 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: './ally-auditor/package-lock.json'
 
-      # 3. Install project dependencies
+      # 3. Install project dependencies inside ally-auditor
       - name: Install Dependencies
         run: npm install
 
-      # 4. Install 'serve' and 'wait-on' globally or locally to run the test site
+      # 4. Install serve & wait-on
       - name: Install Server Tools
         run: npm install -g serve wait-on
 
-      # 5. Start the local test server in the background
+      # 5. Start the local test server
       - name: Start Local Web Server
         run: |
           serve test-site -p 3000 &
           npx wait-on http://localhost:3000
 
-      # 6. Run your accessibility scan
+      # 6. Run Accessibility Scanner
       - name: Run Accessibility Scan
         run: npm run scan
 
-      # 7. Execute your check script to enforce quality gates
+      # 7. Execute Report Checker
       - name: Check Accessibility Report
         run: npm run check-report
 
-      # 8. Upload the generated JSON report as a downloadable workflow artifact
+      # 8. Upload JSON Report Artifact
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: accessibility-report
-          path: reports/latest-scan.json
+          path: ally-auditor/reports/latest-scan.json
