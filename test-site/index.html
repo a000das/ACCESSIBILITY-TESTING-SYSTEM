@@ -1,51 +1,43 @@
 <!DOCTYPE html>
-<!-- BUG 1: <html> has no lang attribute (axe: html-has-lang) -->
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Acme Test Site - Home</title>
   <style>
-    body { font-family: sans-serif; margin: 2rem; background: #ffffff; color: #111111; }
-    .low-contrast { color: #aaaaaa; background: #ffffff; }
-    .icon-btn { width: 40px; height: 40px; }
+    /* Fix color contrast for the paragraph */
+    .low-contrast {
+      color: #111111; /* Darker text for high contrast against background */
+      background-color: #f9f9f9;
+    }
   </style>
 </head>
 <body>
-  <!-- BUG 2: no <main> landmark anywhere on the page (axe: landmark-one-main, region) -->
-  <div>
+  <!-- Navigation Landmark -->
+  <nav aria-label="Main Navigation">
     <a href="index.html">Home</a> | <a href="about.html">About</a>
-  </div>
+  </nav>
 
-  <h1>Welcome to Acme</h1>
+  <main>
+    <h1>Welcome to Acme</h1>
+    
+    <!-- Fixed Image Alt Text -->
+    <img width="300" height="120" src="..." alt="Team photo collaborating in office">
+    <img width="300" height="120" alt="Q3 sales up 40 percent chart" src="...">
+    <img width="300" height="120" alt="Monthly sign-ups data graph" src="...">
 
-  <!-- BUG 3: heading level skipped, h1 -> h4 (axe: heading-order) -->
-  <h4>Our latest news</h4>
+    <h4>Our latest news</h4>
 
-  <!-- BUG 4: image with no alt attribute (axe: image-alt) -->
-  <img width="300" height="120"
-       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Crect width='300' height='120' fill='%23336699'/%3E%3Ctext x='16' y='70' fill='white' font-size='22'%3ETeam photo%3C/text%3E%3C/svg%3E">
+    <p class="low-contrast">Limited time offer: free shipping on all orders this week.</p>
 
-  <!-- BUG 5 (AI-ONLY): alt text exists but is useless. axe will NOT flag this. -->
-  <img width="300" height="120" alt="image"
-       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Crect width='300' height='120' fill='%23993333'/%3E%3Ctext x='16' y='70' fill='white' font-size='22'%3EQ3 sales up 40%25%3C/text%3E%3C/svg%3E">
-
-  <!-- BUG 6 (AI-ONLY): informative chart marked decorative with alt="". axe treats this as fine. -->
-  <img width="300" height="120" alt=""
-       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Crect width='300' height='120' fill='%23339966'/%3E%3Ctext x='16' y='70' fill='white' font-size='22'%3ESign-ups by month%3C/text%3E%3C/svg%3E">
-
-  <!-- BUG 7: low colour contrast, about 2.3:1 (axe: color-contrast) -->
-  <p class="low-contrast">Limited time offer: free shipping on all orders this week.</p>
-
-  <form>
-    <!-- BUG 8: input with no label, no aria-label, no placeholder (axe: label) -->
-    <span>Email</span>
-    <input type="email" name="email">
-
-    <!-- BUG 9: icon-only button with no accessible name (axe: button-name) -->
-    <button class="icon-btn" type="submit">
-      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 10l16-8-6 16-2-6z" fill="#000000"/></svg>
-    </button>
-  </form>
+    <!-- Fixed Form with Label & Accessible Button Name -->
+    <form>
+      <label for="email-input">Email Address</label>
+      <input type="email" id="email-input" name="email">
+      
+      <button class="icon-btn" type="submit" aria-label="Submit Newsletter Form">
+        <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2 10l16-8-6 16-2-6z" fill="#000000"></path></svg>
+      </button>
+    </form>
+  </main>
 </body>
 </html>
